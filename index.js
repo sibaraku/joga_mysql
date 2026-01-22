@@ -22,6 +22,11 @@ app.get('/', (req, res) => {
   res.redirect('/article')
 })
 
+const authorRoutes = require('./routes/author.js')
+app.use('/author', authorRoutes)
+
+app.use('/author', authorRoutes)
+
 app.listen(3003, () => {
   console.log('Server is running on http://localhost:3003')
 })
