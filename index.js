@@ -54,6 +54,31 @@ app.get('/article/:slug', (req, res) => {
     })
 })
 
+app.get('/author/:id', (req, res) => {
+    let authorId = req.params.id
+
+    let authorQuery = `SELECT name FROM author WHERE id = ${authorId}`
+    let articlesQuery = `SELECT * FROM article WHERE author_id = ${authorId}`
+
+    let authorName = ''
+    let articles = []
+
+    con.query(authorQuery, (err, authorResult) => {
+        if (err) throw err
+        authorName = authorResult[0].name
+
+        con.query(articlesQuery, (err, articlesResult) => {
+            if (err) throw err
+            articles = articlesResult
+
+            res.render('author', {
+                author_name: authorName,
+                articles: articles
+            })
+        })
+    })
+})
+
 app.listen(3003, () => {
     console.log('Server is running on http://localhost:3003')
 })
